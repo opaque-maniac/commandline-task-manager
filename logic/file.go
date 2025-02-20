@@ -23,6 +23,12 @@ func AddTask(data string) error {
 		}
 	}
 
+	for _, v := range items {
+		if v.Task == data {
+			return nil
+		}
+	}
+
 	newItem := Todo{Task: data, Completed: false}
 	items = append(items, newItem)
 	jsonStr, err := json.Marshal(items)
@@ -129,9 +135,9 @@ func UpdateTask(olditem, newitem string) error {
 		return err
 	}
 
-	for _, v := range items {
-		if v.Task == olditem {
-			v.Task = newitem
+	for i := range items {
+		if items[i].Task == olditem {
+			items[i].Task = newitem
 		}
 	}
 
@@ -158,6 +164,32 @@ func CompleteTask(task string) error {
 	for i := range data {
 		if data[i].Task == task {
 			data[i].Completed = true
+		}
+	}
+
+	jsonStr, err := json.Marshal(data)
+
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(filename, jsonStr, 0644)
+}
+
+func UnCompleteTask(task string) error {
+	if task == "" {
+		return fmt.Errorf("task cannot be empty")
+	}
+
+	data, err := ReadData()
+
+	if err != nil {
+		return err
+	}
+
+	for i := range data {
+		if data[i].Task == task {
+			data[i].Completed = false
 		}
 	}
 

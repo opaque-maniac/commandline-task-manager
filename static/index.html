@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Todo List</title>
+    
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #000;
+            color: #fff;
+        }
+
+        main {
+            min-height: calc(100vh - 52px);
+        }
+
+
+        .list_section {
+            min-height: 30vh;
+        }
+
+        .empty {
+            height: 30vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+
+        form input {
+            display: block;
+            padding: 0.5rem;
+            height: 3rem;
+            width: 50%;
+            font-size: 1rem;
+            margin: 0 auto;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        form button {
+            display: block;
+            padding: 0.5rem;
+            height: 3rem;
+            width: 50%;
+            font-size: 1rem;
+            margin: 0 auto;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        @media (max-width: 480px) {
+            main {
+                min-height: calc(100vh - 60px);
+            }
+
+            form input {
+                width: 80%;
+            }
+        }
+    </style>
+  </head>
+
+  <body>
+      <header class="header">
+          <h1 class="header_title">Todo List</h1>
+      </header>
+      <main role="main">
+          <section class="list_section">
+              <ul></ul>
+          </section>
+          <section class="form_section">
+              <form class="form" id="form">
+                  <input type="text" class="input" id="input" name="input" placeholder="Add a new task" />
+                  <button type="submit" class="button">Add</button>
+              </form>
+              <ul class="list" id="list"></ul>
+      </main>
+      <footer class="footer">
+          <p class="footer_text">Hazina &copy; 2021</p>
+  </body>
+  <script>
+    const fetchData = async () => {
+        const list = document.querySelector("ul")
+        if (!list) return;
+
+        const url = "http://localhost:8080/data";
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    
+        if (!response.ok) {
+            throw new Error("Failed to fetch data");
+        }
+
+        const data = await response.json();
+        return data
+    }
+
+    const sendData = async (data) => {
+        const url = "http://localhost:8080/input";
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({task: data})
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to submit input");
+        }
+
+        const respData = await response.json();
+        return respData
+    }
+
+    const updateTask = async (name) => {
+        const url = `http://localhost:8080/update/${name}`;
+        const response = await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to update task");
+        }
+
+        const data = await response.json();
+        return data.completed
+    }
+
+    const newNode = (data) => {
+        const {task, completed} = data;
+        const node = document.createElement("li");
+        node.classList.add("task");
+        const text = document.createElement("p")
+        text.textContent = task;
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = completed;
+        checkbox.addEventListener("change", (e) => {
+            e.target.disabled = true;
+            updateTask(task)
+                .then((ticked) => {
+                    checkbox.checked = ticked;
+                })
+                .catch(err => {
+                    console.error(err);
+                }).finally(() => {
+                    e.target.disabled = false;
+                })
+        })
+        node.appendChild(text);
+        node.appendChild(checkbox);
+        return node;
+    }
+
+    const updateList = (data) => {
+        const list = document.querySelector("ul")
+        if (!list) return;
+
+        if (list.querySelector(".empty")) {
+            list.removeChild(list.querySelector(".empty"));
+        }
+
+        const node = newNode(data);
+        list.appendChild(node)
+    };
+
+    const submitListener = e => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const input = formData.get("input");
+        if (!input) return;
+
+        // Send request to submit input
+        sendData(input)
+            .then((data) => updateList(data))
+            .catch(err => console.error(err));
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("form");
+        const unOrderedList = document.querySelector("ul")
+
+        if (!form || !list) return;
+
+        form.addEventListener("submit", submitListener)
+        fetchData().then(data => {
+            const list = Array.isArray(data) ? data : data.data;
+            if (list.length == 0) {
+                const div = document.createElement("div");
+                const paragraph = document.createElement("p");
+                paragraph.textContent = "No tasks available";
+                div.appendChild(paragraph);
+                div.className = "empty";
+                unOrderedList.appendChild(div);
+            } else {
+                list.forEach(task => {
+                    updateList(task);
+                })
+            }
+        }).catch(err => console.error(err));
+    })
+  </script>
+</html>

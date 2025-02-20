@@ -2,6 +2,7 @@ package main
 
 import (
 	"commandline-taskmanager/logic"
+	"commandline-taskmanager/web"
 	"fmt"
 	"os"
 )
@@ -67,6 +68,22 @@ func main() {
 			fmt.Println("Error:", err)
 			os.Exit(1)
 		}
+	case "un-complete":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: un-complete <taskname>")
+			os.Exit(1)
+		}
+		task := os.Args[2]
+		if err := logic.UnCompleteTask(task); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+	case "web":
+		if len(os.Args) != 2 {
+			fmt.Println("Usage: web")
+			os.Exit(1)
+		}
+		web.Start()
 	default:
 		fmt.Println("Unknown command:", command)
 		logic.HelpMessage()
