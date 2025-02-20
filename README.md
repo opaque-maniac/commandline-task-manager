@@ -34,13 +34,22 @@ go build -o <executable_name>
 ``` shell
 ./<executable_name> list
 ```
+4. To update a task, run the following command.
+``` shell
+./<executable_name> update <task_name> <new_task_name>
+```
 
-4. To remove a task, run the following command.
+5. To mark a task as completed, run the following command.
+``` shell
+./<executable_name> complete <task_name>
+```
+
+6. To remove a task, run the following command.
 ``` shell
 ./<executable_name> remove <task_name>
 ```
 
-5. To remove all the tasks, run the following command.
+7. To remove all the tasks, run the following command.
 ``` shell
 ./<executable_name> remove-all
 ```
