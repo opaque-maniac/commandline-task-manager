@@ -7,7 +7,7 @@ It has a web feature to run a localhost server with a **single page app written 
 ## Installation
 1. Run the following command to clone the repository.
 ``` shell
-https://github.com/opaque-maniac/commandline-task-manager.git
+https/github.com/opaque-maniac/commandline-task-manager.git
 ```
 
 2. Run the following command to install the dependencies.
@@ -17,42 +17,42 @@ go build -o <executable_name>
 
 3. Run the following command to run the application.
 ``` shell
-./<executable_name> help
+<executable_name> help
 ```
 
 ## Usage
 1. To get help, run the following command.
 ``` shell
-./<executable_name> help
+<executable_name> help
 ```
 
 2. To add a task, run the following command.
 ``` shell
-./<executable_name> add <task>
+<executable_name> add <task>
 ```
 
 3. To list all the tasks, run the following command.
 ``` shell
-./<executable_name> list
+<executable_name> list
 ```
 4. To update a task, run the following command.
 ``` shell
-./<executable_name> update <task_name> <new_task_name>
+<executable_name> update <task_name> <new_task_name>
 ```
 
 5. To mark a task as completed, run the following command.
 ``` shell
-./<executable_name> complete <task_name>
+<executable_name> complete <task_name>
 ```
 
 6. To remove a task, run the following command.
 ``` shell
-./<executable_name> remove <task_name>
+<executable_name> remove <task_name>
 ```
 
 7. To remove all the tasks, run the following command.
 ``` shell
-./<executable_name> remove-all
+<executable_name> remove-all
 ```
 
 ## Project structure
@@ -100,11 +100,11 @@ go build -o <executable_name>
 
 ## Screens
 Here are some of the screenshots from the tool.
-![Screenshot of the help screen on a linux terminal for the commandline utility]("./readme_images/one.png")
-![Screenshot of the basic actions and commands on a linux terminal for the commandline utility]("./readme_images/two.png")
-![Screenshot of how to start the web server on a linux terminal for the commandline utility]("./readme_images/three.png")
-![Screenshot of the web feature website with no tasks in the list]("./readme_images/four.png")
-![Screenshot of the web feature website with in the list]("./readme_images/five.png")
+![Screenshot of the help screen on a linux terminal for the commandline utility]("readme_images/one.png")
+![Screenshot of the basic actions and commands on a linux terminal for the commandline utility]("readme_images/two.png")
+![Screenshot of how to start the web server on a linux terminal for the commandline utility]("readme_images/three.png")
+![Screenshot of the web feature website with no tasks in the list]("readme_images/four.png")
+![Screenshot of the web feature website with in the list]("readme_images/five.png")
 
 ### Conclusion
 This app provided a way to practice golang so it was fun and I got to build a single page app in vanilla js which was new.
