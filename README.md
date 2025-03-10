@@ -107,4 +107,4 @@ Here are some of the screenshots from the tool.
 ![Screenshot of the web feature website with in the list](./readme_images/five.png)
 
 ### Conclusion
-This app provided a way to practice golang so it was fun and I got to build a single page app in vanilla js which was new.
+This app provided a way to practice golang so it was fun and I got to build a single page app in vanilla js which was a new experience for me. Feel free to try it and don't forget to leave a star if you like it. 
