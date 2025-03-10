@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="/static/stylesheets/styles.css" />
+    <script src="/static/javascript/app.js" type="module" defer></script>
+    <title>Todo List</title>
+  </head>
+
+  <body>
+      <header class="header">
+          <a href="/" class="navlink" data-path="/">
+              <h1 class="header_title">Todo List</h1>
+          </a>
+      </header>
+
+      <!-- background -->
+      <div id="background" aria-hidden="true">
+          <img src="/static/images/one.svg" alt="background" />
+      </div>
+
+      <main role="main">
+          <!-- This is main section -->
+          <!-- App loads content here -->
+      </main>
+      <footer class="footer">
+          <p class="footer_text">Hazina &copy; 2021</p>
+      </footer>
+
+      <!-- Home page -->
+      <template id="home-page-template">
+          <div class="main">
+              <!-- Content -->
+              <section class="todo-list">
+              </section>
+
+              <!-- Form -->
+              <section>
+                  <form class="new-todo-form">
+                      <div>
+                          <label for="todo">Add a new todo</label>
+                          <input type="text" name="todo" id="todo" placeholder="Enter new todo" required />
+                      </div>
+                      <div>
+                          <button type="submit" class="submit-button">Send</button>
+                      </div>
+                  </form>
+                  <div>
+                      <button class="clear-all-button">Clear</button>
+                  </div>
+              </section>
+          </div>
+      </template>
+
+      <!-- Edit Page -->
+      <template id="edit-page-template">
+          <div class="main">
+              <section>
+                  <h3>Edit task</h3>
+              </section>
+
+              <!-- Form -->
+              <section>
+                  <form class="update-todo-form">
+                      <div>
+                          <label for="todo">Update todo</label>
+                          <input type="text" name="todo" id="todo" placeholder="Enter new todo" required />
+                      </div>
+                      <div>
+                          <button type="submit" class="submit-button">Send</button>
+                      </div>
+                  </form>
+              </section>
+          </div>
+      </template>
+
+      <!-- todo item -->
+      <template id="todo-item-template">
+          <div class="todo-item">
+              <input type="checkbox" class="todo-item-input" name="compeleted" />
+              <p class="todo-item-content"></p>
+              <div class="todo-button-container">
+                  <button class="todo-update-button">
+                      Edit
+                  </button>
+                  <button class="todo-delete-button">
+                      Delete
+                  </button>
+              </div>
+          </div>
+      </template>
+
+      <!-- 404 page -->
+      <template id="404-page-template">
+          <div class="main">
+              <section class="content">
+                  <h2>404</h2>
+                  <p>Page not found</p>
+              </section>
+              <section class="link">
+                  <a href="/" class="navlink">Go back home</a>
+              </section>
+          </div>
+      </template>
+  </body>
+</html>

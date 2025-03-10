@@ -14,6 +14,7 @@ func getTaskName(path, prefix string) string {
 
 // send Error
 func sendError(w http.ResponseWriter, err error, statusCode int) {
+	fmt.Printf("Error: %s\n", err.Error())
 	resp := ErrorResp{Error: err.Error()}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
@@ -32,7 +33,7 @@ func sendGenericResponse(w http.ResponseWriter, data string) {
 
 // handle home
 func homePage(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "static/index.html")
+	http.ServeFile(w, r, "templates/index.html")
 }
 
 // submit handler
@@ -41,6 +42,8 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 		sendError(w, fmt.Errorf("Invalid request method"), http.StatusBadRequest)
 		return
 	}
+
+	fmt.Printf("Request method: %s\n", r.Method)
 
 	var body NewTaskBody
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
@@ -63,6 +66,7 @@ func dataHandler(w http.ResponseWriter, r *http.Request) {
 		sendError(w, err, http.StatusInternalServerError)
 	}
 
+	fmt.Printf("Request method: %s\n", r.Method)
 	resp := SuccessListResp{Data: todos}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -73,12 +77,12 @@ func dataHandler(w http.ResponseWriter, r *http.Request) {
 
 // update handler
 func updateHandler(w http.ResponseWriter, r *http.Request) {
-	taskName := getTaskName(r.URL.Path, "/update/")
-
 	if r.Method != http.MethodPut {
 		sendError(w, fmt.Errorf("Invalid request method"), http.StatusBadRequest)
 		return
 	}
+
+	taskName := getTaskName(r.URL.Path, "/api/update/")
 
 	var body UpdateBody
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
@@ -86,26 +90,42 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	fmt.Printf("Request method: %s\n", r.Method)
+
 	if err := logic.UpdateTask(taskName, body.NewName); err != nil {
 		sendError(w, err, http.StatusBadRequest)
 		return
 	}
+
+	sendGenericResponse(w, "Task updated")
 }
 
 // remove handler
 func removeHandler(w http.ResponseWriter, r *http.Request) {
-	taskName := getTaskName(r.URL.Path, "/remove/")
+	if r.Method != http.MethodDelete {
+		sendError(w, fmt.Errorf("Invalid request method"), http.StatusBadRequest)
+		return
+	}
+
+	taskName := getTaskName(r.URL.Path, "/api/remove/")
 	if err := logic.RemoveTask(taskName); err != nil {
 		sendError(w, err, http.StatusBadRequest)
 		return
 	}
+
+	fmt.Printf("Request method: %s\n", r.Method)
 
 	sendGenericResponse(w, "Task removed")
 }
 
 // complete handler
 func completeHandler(w http.ResponseWriter, r *http.Request) {
-	taskName := getTaskName(r.URL.Path, "/complete/")
+	if r.Method != http.MethodPut {
+		sendError(w, fmt.Errorf("Invalid request method"), http.StatusBadRequest)
+		return
+	}
+
+	taskName := getTaskName(r.URL.Path, "/api/complete/")
 
 	list, err := logic.ReadData()
 	if err != nil {
@@ -137,39 +157,47 @@ func completeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	fmt.Printf("Request method: %s\n", r.Method)
+
 	sendGenericResponse(w, "Task completed")
 }
 
 // remove all
 func removeAllHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		sendError(w, fmt.Errorf("Invalid request method"), http.StatusBadRequest)
+		return
+	}
+
 	if err := logic.RemoveAllTasks(); err != nil {
 		sendError(w, err, http.StatusInternalServerError)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(NoReturnSuccessResp{Message: "All tasks removed"}); err != nil {
-		sendError(w, err, http.StatusInternalServerError)
-	}
+	fmt.Printf("Request method: %s\n", r.Method)
+
+	sendGenericResponse(w, "All tasks removed")
 }
 
-func Start() {
+func Start(port string) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", homePage)
-	mux.HandleFunc("/data", dataHandler)
-	mux.HandleFunc("/submit", submitHandler)
-	mux.HandleFunc("/update/", updateHandler)
-	mux.HandleFunc("/remove/", removeHandler)
-	mux.HandleFunc("/complete/", completeHandler)
-	mux.HandleFunc("/remove-all", removeAllHandler)
+	mux.HandleFunc("/api/data", dataHandler)
+	mux.HandleFunc("/api/submit", submitHandler)
+	mux.HandleFunc("/api/update/", updateHandler)
+	mux.HandleFunc("/api/remove/", removeHandler)
+	mux.HandleFunc("/api/complete/", completeHandler)
+	mux.HandleFunc("/api/remove-all", removeAllHandler)
+
+	fs := http.FileServer(http.Dir("./static"))
+	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	server := &http.Server{
-		Addr:    ":8080",
+		Addr:    fmt.Sprintf(":%s", port),
 		Handler: mux,
 	}
 
-    fmt.Println("Server started at http://localhost:8080")
+	fmt.Println("Server started at http://localhost:8080")
 
 	if err := server.ListenAndServe(); err != nil {
 		panic(err)

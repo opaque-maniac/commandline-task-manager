@@ -17,7 +17,7 @@ func HelpMessage() {
 	fmt.Println("  update <old> <new>     Rename an item in the list")
 	fmt.Println("  complete <item>        Mark an item as completed")
 	fmt.Println("  un-complete <item>     Mark an item as un-completed")
-	fmt.Println("  web                    Start the web server port 8080")
+	fmt.Println("  web <port>             Start the web server on http://localhost:<port>")
 
 	fmt.Println("\nExamples:")
 	fmt.Println("  todo add 'Buy milk'         # Adds 'Buy milk' to the list")
@@ -27,7 +27,7 @@ func HelpMessage() {
 	fmt.Println("  todo complete 'Buy coffee'  # Marks a task as completed")
 	fmt.Println("  todo un-complete 'Buy coffee'  # Marks a task as un-completed")
 	fmt.Println("  todo remove-all             # Removes all tasks")
-	fmt.Println("  todo web                    # Starts the web server")
+	fmt.Println("  todo web 8080               # Starts the web server on http://localhost:8080")
 }
 
 func SuccessMessage(command string) {

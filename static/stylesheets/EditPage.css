@@ -1,0 +1,34 @@
+.update-todo-form {
+    margin: 0 auto;
+    width: 300px;
+}
+
+.update-todo-form input {
+    display: block;
+    height: 40px;
+    width: 300px;
+    font-size: 15px;
+    padding: 0 10px;
+}
+
+.update-todo-form label {
+    display: block;
+    text-align: center;
+}
+
+.update-todo-form button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 40px;
+    background-color: #000;
+    color: #fff;
+    margin: 10px auto;
+    border: none;
+}
+
+
+h3 {
+    text-align: center;
+}

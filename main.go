@@ -79,11 +79,12 @@ func main() {
 			os.Exit(1)
 		}
 	case "web":
-		if len(os.Args) != 2 {
-			fmt.Println("Usage: web")
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: web <port>")
 			os.Exit(1)
 		}
-		web.Start()
+		port := os.Args[2]
+		web.Start(port)
 	default:
 		fmt.Println("Unknown command:", command)
 		logic.HelpMessage()

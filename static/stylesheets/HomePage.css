@@ -1,0 +1,125 @@
+.new-todo-form {
+    margin: 0 auto;
+    width: 300px;
+}
+
+.new-todo-form input {
+    display: block;
+    height: 40px;
+    width: 300px;
+    font-size: 15px;
+    padding: 0 10px;
+}
+
+.new-todo-form label {
+    display: block;
+    text-align: center;
+}
+
+.new-todo-form button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 40px;
+    background-color: #000;
+    color: #fff;
+    margin: 10px auto;
+    border: none;
+    cursor: pointer;
+}
+
+.todo-list,
+.hidden {
+    min-height: 200px;
+}
+
+.not-found {
+    font-size: 1.2rem;
+}
+
+.hidden {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+}
+
+/* todo */
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    width: 450px;
+    margin-bottom: 1rem;
+    margin: 0 auto;
+    min-height: 50px;
+    padding: 0 5px;
+    gap: 5px;
+}
+
+.todo-button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.todo-item button,
+.todo-item input {
+    cursor: pointer;
+}
+
+.todo-item button {
+    display: block;
+    width: 60px;
+    height: 30px;
+    background-color: #000;
+    border: none;
+    margin: 0;
+    color: #fff;
+}
+
+.todo-item p {
+    width: 100%;
+    /*border: 1px solid green;*/
+    height: 100%;
+    min-height: 50px;
+    margin: 0;
+}
+
+/*Reset button*/
+.clear-all-button {
+    display: block;
+    width: 80px;
+    height: 30px;
+    background-color: #ffd727;
+    border: none;
+    margin: 0;
+    margin: 0 auto;
+    color: #000;
+    cursor: pointer;
+    border: none;
+}
+
+/*Mobile*/
+@media screen and (max-width: 400px) {
+    .todo-item {
+        width: 300px;
+    }
+
+    .todo-button-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        gap: 5px;
+    }
+}
+
