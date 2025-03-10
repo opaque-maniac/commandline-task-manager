@@ -1,6 +1,7 @@
-# commandline-task-manager
-Simple task manager for the commandline
-It is a simple task manager for the commandline. It allows you to add, remove, list todo tasks.
+# commandline-todo-list
+Simple todo-list manager for the commandline
+It is simple to use and consume.
+It allows you to add, remove, list todo tasks.
 It persists the tasks in a file so that you can access them later.
 It has a web feature to run a localhost server with a **single page app written in vanilla js** for a better user experience.
 
