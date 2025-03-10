@@ -100,7 +100,7 @@ go build -o <executable_name>
 
 ## Screens
 Here are some of the screenshots from the tool.
-![Screenshot of the help screen on a linux terminal for the commandline utility]("./readme_images/one.png")
+![Screenshot of the help screen on a linux terminal for the commandline utility]("readme_images/one.png")
 ![Screenshot of the basic actions and commands on a linux terminal for the commandline utility]("./readme_images/two.png")
 ![Screenshot of how to start the web server on a linux terminal for the commandline utility]("./readme_images/three.png")
 ![Screenshot of the web feature website with no tasks in the list]("./readme_images/four.png")
