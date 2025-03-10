@@ -100,11 +100,11 @@ go build -o <executable_name>
 
 ## Screens
 Here are some of the screenshots from the tool.
-![Screenshot of the help screen on a linux terminal for the commandline utility]("readme_images/one.png")
-![Screenshot of the basic actions and commands on a linux terminal for the commandline utility]("./readme_images/two.png")
-![Screenshot of how to start the web server on a linux terminal for the commandline utility]("./readme_images/three.png")
-![Screenshot of the web feature website with no tasks in the list]("./readme_images/four.png")
-![Screenshot of the web feature website with in the list]("./readme_images/five.png")
+![Screenshot of the help screen on a linux terminal for the commandline utility](./readme_images/one.png)
+![Screenshot of the basic actions and commands on a linux terminal for the commandline utility](./readme_images/two.png)
+![Screenshot of how to start the web server on a linux terminal for the commandline utility](./readme_images/three.png)
+![Screenshot of the web feature website with no tasks in the list](./readme_images/four.png)
+![Screenshot of the web feature website with in the list](./readme_images/five.png)
 
 ### Conclusion
 This app provided a way to practice golang so it was fun and I got to build a single page app in vanilla js which was new.
